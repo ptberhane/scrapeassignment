@@ -16,7 +16,7 @@ var UserSchema = new Schema({
     // Store ObjectIds in the array
     type: Schema.Types.ObjectId,
     // The ObjectIds will refer to the ids in the Note model
-    ref: "Note"
+    ref: "Comment"
   }]
 });
 

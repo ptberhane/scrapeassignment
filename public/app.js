@@ -24,7 +24,7 @@ $(document).on("click", "p", function() {
     .done(function(data) {
       console.log(data);
       // The title of the article
-      $("#comments").append("<h2>" + data.title + "</h2>");
+      $("#comments").append("<h1>" + data.title + "</h1>");
       // An input to enter a new title
       $("#comments").append("<input id='titleinput' name='title' >");
       // A textarea to add a new note body

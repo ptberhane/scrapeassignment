@@ -6,6 +6,7 @@ var Comment = require("./models/Comment.js");
 var Article = require("./models/Article.js");
 var request = require("request");
 var cheerio = require("cheerio");
+var exphbs = require("express-handlebars");
 mongoose.Promise = Promise;
 
 
@@ -39,20 +40,23 @@ db.once("open", function() {
 // A GET request to scrape the echojs website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with request
-  request("http://www.reuters.com/places/mexico", function(error, response, html) {
+  request("http://allafrica.com/list/group/main/main/cat/petroleum.html", function(error, response, html) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(html);
     // Now, we grab every h2 within an article tag, and do the following:
-    $("article h2").each(function(i, element) {
+    $("div.top-story").each(function(i, element) {
 
       // Save an empty result object
       var result = {};
 
       // Add the text and href of every link, and save them as properties of the result object
-      result.title = $(this).children("a").text();
-      result.link = $(this).children("a").attr("href");
+      result.title = $(this).children("h2").text();
+      result.link = $(this).children("h2").attr("href");
 
       var entry = new Article(result);
+
+
+   
 
       entry.save(function(err, doc) {
         // Log any errors
